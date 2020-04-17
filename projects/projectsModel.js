@@ -17,7 +17,7 @@ module.exports =
     updateProject,
     updateResource,
     updateTask,
-    
+
     removeProject,
     removeResource,
     removeTask
@@ -99,8 +99,8 @@ function removeResource(id){
     .del();
 };
 
-function removeTask(id){
+function removeTask(id, step){
     return db('tasks')
     .where({ id })
-    .del();
+    .del({step});
 };

@@ -5,12 +5,15 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex("resources").insert([
-        {ResourceName: "computer", Description: "laptop"},
-        {ResourceName: "sewing machine", Description: ""},
-        {ResourceName: "electricity", Description: ""},
-        {ResourceName: "washing machine", Description: ""},
-        {ResourceName: "fabric", Description:"cotton cloth"},
-        {ResourceName: "internet access", Description:""}
+        {ResourceName: "computer", Description: "laptop", ProjectID: 1},
+        {ResourceName: "sewing machine", Description: "", ProjectID: 2},
+        {ResourceName: "electricity", Description: "", ProjectID: 1},
+        {ResourceName: "electricity", Description: "", ProjectID: 2},
+        {ResourceName: "electricity", Description: "", ProjectID: 3},
+        {ResourceName: "washing machine", Description: "", ProjectID: 3},
+        {ResourceName: "fabric", Description:"cotton cloth", ProjectID: 2},
+        {ResourceName: "internet access", Description:"", ProjectID: 1},
+        {ResourceName: "internet access", Description:"", ProjectID: 2}
       ]);
     });
 };

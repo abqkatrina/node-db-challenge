@@ -55,8 +55,8 @@ Complete the following tasks:
 - [ ] Design the data model and use _knex migrations_ to create the database and tables needed to satisfy the following business rules:
   - [X] a `project` can have multiple `tasks`.
   - [X] a `task` belongs to only one `project`.
-  - [ ] a `project` can use multiple `resources`. Example of `resources` are: computer, conference room, microphone, delivery van.
-  - [ ] the same `resource` can be used in multiple `projects`.
+  - [X] a `project` can use multiple `resources`. Example of `resources` are: computer, conference room, microphone, delivery van.
+  - [X] the same `resource` can be used in multiple `projects`.
   - [X] when adding `projects` the client must provide a name, the description is optional.
   - [X] when adding `resources` the client must provide a name, the description is optional.
   - [X] when adding a `task` the client must provide a description, the notes are optional.
@@ -64,11 +64,11 @@ Complete the following tasks:
   - [ ] for `projects` and `tasks` if no value is provided for the `completed` property, the API should provide a default value of `false`.
 - [ ] Build an API with endpoints for:
   - [ ] adding resources.
-  - [ ] retrieving a list of resources.
+  - [X] retrieving a list of resources.
   - [ ] adding projects.
-  - [ ] retrieving a list of projects.
-  - [ ] adding tasks.
-  - [ ] retrieving a list of tasks. **The list of tasks should include the project name and project description**.
+  - [X] retrieving a list of projects.
+  - [X] adding tasks.
+  - [X] retrieving a list of tasks. **The list of tasks should include the project name and project description**.
 
 ### Entities
 
@@ -135,7 +135,7 @@ Add an endpoint for retrieving a `project` by its `id` that returns an object wi
 }
 ```
 
-Add the remaining CRUD operations for projects and tasks.
+[X] Add the remaining CRUD operations for projects and tasks.
 
 [X] Use `knex` to add _data seeding_ scripts for projects and tasks.
 

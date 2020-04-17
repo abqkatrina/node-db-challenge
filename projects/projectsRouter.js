@@ -1,12 +1,10 @@
 const express = require('express');
-
 const projects = require('./projectsModel.js');
-
 const router = express.Router();
 
 //works
 router.get('/', (req, res) => {
-  projects.find()
+  projects.findProjects()
   .then(projects => {
     res.json(projects);
   })
@@ -18,7 +16,7 @@ router.get('/', (req, res) => {
 //works
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  projects.findById(id)
+  projects.findProjectById(id)
   .then(project => {
     if (project) {
       res.json(project);
@@ -31,10 +29,11 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//works
 router.get('/:id/resources', (req, res) => {
-  const { id } = req.params;
+    const { id } = req.params;
   projects.findResources(id)
-  .then(steps => {
+  .then(resources => {
     if (resources.length) {
       res.json(resources);
     } else {
@@ -64,7 +63,7 @@ router.get('/:id/tasks', (req, res) => {
 
 router.post('/', (req, res) => {
   const projectData = req.body;
-  projects.add(projectData)
+  projects.addProject(projectData)
   .then(project => {
     res.status(201).json(project);
   })
@@ -73,15 +72,15 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/:id/resources', (req, res) => {
+router.post(':id/resources', (req, res) => {
     const resourceData = req.body;
     const { id } = req.params; 
-    projects.findById(id)
+    projects.findProjectById(id)
     .then(project => {
       if (project) {
         projects.addResource(resourceData, id)
-        .then(step => {
-          res.status(201).json(step);
+        .then(resource => {
+          res.status(201).json(resource);
         })
       } else {
         res.status(404).json({ message: 'Could not find project with given id.' })
@@ -92,15 +91,16 @@ router.post('/:id/resources', (req, res) => {
     });
   });
 
+  //works
 router.post('/:id/tasks', (req, res) => {
   const taskData = req.body;
   const { id } = req.params; 
-  projects.findById(id)
+  projects.findProjectById(id)
   .then(project => {
     if (project) {
       projects.addTask(taskData, id)
-      .then(step => {
-        res.status(201).json(step);
+      .then(task => {
+        res.status(201).json(task);
       })
     } else {
       res.status(404).json({ message: 'Could not find project with given id.' })
@@ -170,7 +170,7 @@ router.put('/:id/resources', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  projects.remove(id)
+  projects.removeProject(id)
   .then(deleted => {
     if (deleted) {
       res.json({ removed: deleted });
@@ -185,7 +185,7 @@ router.delete('/:id', (req, res) => {
 
 router.delete('/:id/resources', (req, res) => {
     const { id } = req.params;
-    projects.remove(id)
+    projects.removeResource(id)
     .then(deleted => {
       if (deleted) {
         res.json({ removed: deleted });
@@ -198,19 +198,20 @@ router.delete('/:id/resources', (req, res) => {
     });
   });
 
-  router.delete('/:id/tasks', (req, res) => {
-    const { id } = req.params;
-    projects.remove(id)
-    .then(deleted => {
-      if (deleted) {
-        res.json({ removed: deleted });
-      } else {
-        res.status(404).json({ message: 'Could not find project with given id' });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ message: 'Failed to delete task' });
-    });
-  });
+router.delete('/:id/tasks/:step', (req, res) => {
+const { id } = req.params;
+const { step } = req.params;
+projects.removeTask(id,step)
+.then(deleted => {
+    if (deleted) {
+    res.json({ removed: deleted });
+    } else {
+    res.status(404).json({ message: 'Could not find project with given id' });
+    }
+})
+.catch(err => {
+    res.status(500).json({ message: 'Failed to delete task' });
+});
+});
 
 module.exports = router;
