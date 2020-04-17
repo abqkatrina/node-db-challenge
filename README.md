@@ -27,8 +27,8 @@ Follow these steps for completing your project.
 
 - [X] Submit a Pull-Request to merge `firstName-lastName` Branch into master on **your fork, don't make Pull Requests against Lambda's repository**.
 - [X] Please don't merge your own pull request.
-- [ ] Add your _Team Lead_ as a Reviewer on the Pull-request
-- [ ] Your _Team Lead_ will count the challenge as done by merging the branch into _master_.
+- [X] Add your _Team Lead_ as a Reviewer on the Pull-request
+- [X] Your _Team Lead_ will count the challenge as done by merging the branch into _master_.
 
 ## Commits
 
@@ -53,14 +53,14 @@ Take the steps necessary to complete the project from scratch. Start by initiali
 Complete the following tasks:
 
 - [ ] Design the data model and use _knex migrations_ to create the database and tables needed to satisfy the following business rules:
-  - [ ] a `project` can have multiple `tasks`.
+  - [X] a `project` can have multiple `tasks`.
   - [X] a `task` belongs to only one `project`.
   - [ ] a `project` can use multiple `resources`. Example of `resources` are: computer, conference room, microphone, delivery van.
   - [ ] the same `resource` can be used in multiple `projects`.
   - [X] when adding `projects` the client must provide a name, the description is optional.
   - [X] when adding `resources` the client must provide a name, the description is optional.
   - [X] when adding a `task` the client must provide a description, the notes are optional.
-  - [ ] when adding a `task` the client must provide the `id` of an existing project.
+  - [X] when adding a `task` the client must provide the `id` of an existing project.
   - [ ] for `projects` and `tasks` if no value is provided for the `completed` property, the API should provide a default value of `false`.
 - [ ] Build an API with endpoints for:
   - [ ] adding resources.
@@ -137,7 +137,7 @@ Add an endpoint for retrieving a `project` by its `id` that returns an object wi
 
 Add the remaining CRUD operations for projects and tasks.
 
-Use `knex` to add _data seeding_ scripts for projects and tasks.
+[X] Use `knex` to add _data seeding_ scripts for projects and tasks.
 
 Add support for the concept of `contexts`. A context is something like _at home_, _at work_ or _at computer_. The idea is that some tasks require one or more `contexts` in order to be worked on. For example, the task of _file income taxes_ may require that you are _at home_, _at computer_ and _online_ so if you are _at work_ and look at the list of pending tasks you could do in your current context, filing your taxes will not be one of them.
 
