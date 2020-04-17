@@ -8,6 +8,7 @@ module.exports =
     findProjects,
     findProjectById,
     findResources,
+    findResourceByID,
     findTasks,
 
     addProject,
@@ -33,7 +34,11 @@ function findProjectById(id) {
     .first();
 };
 
-function findResources(ProjectID) {
+function findResources() {
+    return db('resources');
+}
+
+function findResourceByID(ProjectID) {
     return db('resources')
     .where({ ProjectID })
     .orderBy('resources.ResourceName');
@@ -75,10 +80,10 @@ function updateProject(changes, id) {
     .update(changes);
 };
 
-function updateResource(changes, id) {
+function updateResource(changes, thing) {
     return db('resources')
     .where({ id })
-    .update(changes);
+    .update(changes, thing);
 };
 
 function updateTask(changes, id) {
