@@ -72,7 +72,7 @@ router.get('/:id/tasks', (req, res) => {
     });
   });
 
-//works -- not Completed dependant
+//works -- NOT Completed dependant
 router.post('/', (req, res) => {
   const projectData = req.body;
   projects.addProject(projectData)
@@ -103,13 +103,9 @@ router.post('/:id/tasks', (req, res) => {
   projects.findProjectById(id)
   .then(project => {
     if (project) {
-      projects.addTask(taskData, id)
+      projects.addTask(taskData)
       .then(task => {
-          if(!taskData.Complete){
-              res.send(400).json({ message: "needs completion status"})
-          } else {
-        res.status(201).json(task);}
-      })
+        res.status(201).json(task);})
     } else {
       res.status(404).json({ message: 'Could not find project with given id.' })
     }
@@ -194,35 +190,35 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-router.delete('/resources/:id', (req, res) => {
-    const { id } = req.params;
-    projects.removeResource(id)
-    .then(deleted => {
-      if (deleted) {
-        res.json({ removed: deleted });
-      } else {
-        res.status(404).json({ message: 'Could not find project with given id' });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ message: 'Failed to delete resource' });
-    });
-  });
+// router.delete('/resources/:id', (req, res) => {
+//     const { id } = req.params;
+//     projects.removeResource(id)
+//     .then(deleted => {
+//       if (deleted) {
+//         res.json({ removed: deleted });
+//       } else {
+//         res.status(404).json({ message: 'Could not find project with given id' });
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: 'Failed to delete resource' });
+//     });
+//   });
 
-// router.delete('/:id/tasks/:step', (req, res) => {
-// const { id } = req.params;
-// const { step } = req.params;
-// projects.removeTask(id,step)
-// .then(deleted => {
-//     if (deleted) {
-//     res.json({ removed: deleted });
-//     } else {
-//     res.status(404).json({ message: 'Could not find project with given id' });
-//     }
-// })
-// .catch(err => {
-//     res.status(500).json({ message: 'Failed to delete task' });
-// });
-// });
+router.delete('/:id/tasks/:step', (req, res) => {
+const { id } = req.params;
+const { step } = req.params;
+projects.removeTask(id,step)
+.then(deleted => {
+    if (deleted) {
+    res.json({ removed: deleted });
+    } else {
+    res.status(404).json({ message: 'Could not find project with given id' });
+    }
+})
+.catch(err => {
+    res.status(500).json({ message: 'Failed to delete task' });
+});
+});
 
 module.exports = router;
