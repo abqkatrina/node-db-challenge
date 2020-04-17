@@ -82,8 +82,8 @@ function updateProject(changes, id) {
 
 function updateResource(changes, thing) {
     return db('resources')
-    .where({ id })
-    .update(changes, thing);
+    .where({ thing })
+    .update(changes);
 };
 
 function updateTask(changes, id) {

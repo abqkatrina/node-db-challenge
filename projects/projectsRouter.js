@@ -85,18 +85,26 @@ router.post('/', (req, res) => {
 });
 
 //works
-router.post('/resources', (req, res) => {
-    const resourceData = req.body
-    projects.addResource(resourceData)
-    .then(resource => {
-        res.status(201).json(resource);
+router.post('/:id/resources', (req, res) => {
+    const resourceData = req.body;
+    const { id } = req.params;
+    projects.findProjectById(id)
+    .then(project => {
+         if (project) {
+            projects.addResource(resourceData)
+            .then(resource => {
+                res.status(201).json(resource);
+            })
+        } else {
+            res.status(404).json({ message: 'Could not find project with given id.' })
+        }
     })
     .catch (err => {
       res.status(500).json({ message: 'Failed to create new resource' });
     })
 });
 
-  //works
+  //works BAD RETURN
 router.post('/:id/tasks', (req, res) => {
   const taskData = req.body;
   const { id } = req.params; 
@@ -135,25 +143,26 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// router.put('/:id/resources/:thing', (req, res) => {
-//     const { id } = req.params;
-//     const { thing } = req.params
-//     const changes = req.body;
-//     projects.findById(id)
-//     .then(project => {
-//       if (project) {
-//         projects.update(changes, thing)
-//         .then(updatedproject => {
-//           res.json(updatedproject);
-//         });
-//       } else {
-//         res.status(404).json({ message: 'Could not find project with given id' });
-//       }
-//     })
-//     .catch (err => {
-//       res.status(500).json({ message: 'Failed to update resource' });
-//     });
-//   });
+//NOT WORKING
+router.put('/:proj_id/resources/:res_id', (req, res) => {
+    const { proj_id } = req.params;
+    const { res_id } = req.params
+    const changes = req.body;
+    projects.findProjectById(proj_id)
+    .then(project => {
+      if (project) {
+        projects.updateResource(changes, res_id)
+        .then(updatedthing => {
+          res.json(updatedthing);
+        });
+      } else {
+        res.status(404).json({ message: 'Could not find project with given id' });
+      }
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to update resource' });
+    });
+  });
 
 //   router.put('/:id/tasks', (req, res) => {
 //     const { id } = req.params;
@@ -205,20 +214,24 @@ router.delete('/:id', (req, res) => {
 //     });
 //   });
 
-router.delete('/:id/tasks/:step', (req, res) => {
-const { id } = req.params;
-const { step } = req.params;
-projects.removeTask(id,step)
-.then(deleted => {
-    if (deleted) {
-    res.json({ removed: deleted });
-    } else {
-    res.status(404).json({ message: 'Could not find project with given id' });
-    }
-})
-.catch(err => {
-    res.status(500).json({ message: 'Failed to delete task' });
-});
+//works BAD RETURN
+router.delete('/:proj_id/tasks/:task_id', (req, res) => {
+    const { proj_id } = req.params;
+    const { task_id } = req.params;
+    projects.removeTask(task_id)
+        .then(deleted => {
+            if (deleted) {
+            projects.getProjectById(proj_id)
+            .then(project => {
+                res.status(200).json(project)
+            });
+            } else {
+            res.status(404).json({ message: 'Could not delete' });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to delete task' });
+        });
 });
 
 module.exports = router;
